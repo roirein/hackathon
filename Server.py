@@ -66,6 +66,7 @@ class Server:
         respond += "Group 2:\n==\n"
         for i in self.group2:
             respond += self.group2[i]
+        respond += "\n Start pressing keys on your keyboard as fast as you can!!\n"
         try:
             client.send(str.encode(respond))
         except:
