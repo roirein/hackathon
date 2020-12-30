@@ -2,7 +2,10 @@ from socket import *
 import time
 from threading import *
 import struct
-import scapy.all
+
+
+
+
 
 class Server:
 
@@ -21,7 +24,7 @@ class Server:
         while True:
             try:
                 n = input("enter the network number:")
-                ip = networks[n-1]
+                ip = networks[int(n)-1]
                 break
             except:
                 continue

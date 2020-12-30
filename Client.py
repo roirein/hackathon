@@ -1,9 +1,22 @@
 import select
 import time
+import os
 from socket import *
 import struct
-from msvcrt import getch
-from msvcrt import kbhit
+#from msvcrt import getch
+#from msvcrt import kbhit
+import os
+
+# Windows
+if os.name == 'nt':
+    import msvcrt
+
+# Posix (Linux, OS X)
+else:
+    import sys
+    import termios
+    import atexit
+    from select import select
 
 
 class Client:
@@ -53,13 +66,16 @@ class Client:
         #self.tcp_client_Socket.settimeout(0.001)
         t_end = time.time() + 10
         while time.time() < t_end:
-            try:
-                if kbhit():
-                    key = getch()
-                    socket.send(str.encode(key.decode(encoding='utf-8')))
-            except:
-                print("connection lost, listening for offer requests...")
-                return
+            if os.name == 'nt':
+                try:
+                    if msvcrt.kbhit():
+                        key = msvcrt.getch()
+                        socket.send(str.encode(key.decode(encoding='utf-8')))
+                except:
+                    print("connection lost, listening for offer requests...")
+                    return
+            else:
+                print("Jesus Christ enter the chat")
         try:
             msg = socket.recv(1024)
         except:
