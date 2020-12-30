@@ -13,8 +13,21 @@ class Server:
         self.score2 = 0
         self.group2 = {}
         self.server_name = "Jesus Christ"
-        self.my_ip = scapy.all.get_if_addr(scapy.all.conf.iface)
-        print("Server started,listening on IP address " + self.my_ip)
+        networks = gethostbyname_ex(gethostname())[2]
+        print("choose your network:")
+        for i in range(len(networks)):
+            print(i+1, networks[i])
+        ip = ""
+        while True:
+            try:
+                n = input("enter the network number:")
+                ip = networks[int(n)-1]
+                break
+            except:
+                continue
+        self.my_ip = ip
+        print(self.server_name +" entered the chat ,started,listening on IP address " + self.my_ip)
+
 
     def spread_the_message(self):
         udp_socket = socket(AF_INET, SOCK_DGRAM)
