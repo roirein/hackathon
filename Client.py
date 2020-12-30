@@ -107,8 +107,8 @@ class Client:
 
     @staticmethod
     def send_message(socket):
-        key = getch.getch()
         try:
+            key = getch.getch()
             socket.send(str.encode(key))
         except:
             pass
