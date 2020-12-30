@@ -15,7 +15,6 @@ else:
     import sys
     import select
     import tty
-    import getch
     import termios
 
 
@@ -23,8 +22,6 @@ class Client:
 
     def __init__(self, name):
         self.name = name
-        #self.udp_client_Socket = socket(AF_INET, SOCK_DGRAM)
-        #self.tcp_client_Socket = socket(AF_INET, SOCK_STREAM)
         print("Client started, listening for offer requests...")
         colorama.init()
 
@@ -70,9 +67,7 @@ class Client:
                 return
         msg = msg.decode(encoding="utf-8")
         print(msg)
-        #self.tcp_client_Socket.settimeout(0.001)
         t_end = time.time() + 10
-        stop = 0.5
         while time.time() < t_end:
             if os.name == 'nt':
                 try:
@@ -80,7 +75,7 @@ class Client:
                         key = msvcrt.getch()
                         socket.send(str.encode(key.decode(encoding='utf-8')))
 
-                except Exception as e:
+                except:
                     print("connection lost, listening for offer requests...")
                     return
             else:
@@ -106,13 +101,6 @@ class Client:
     def isData(self):
         return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
 
-    @staticmethod
-    def send_message(socket):
-        try:
-            key = getch.getch()
-            socket.send(str.encode(key))
-        except:
-            pass
 
 
 

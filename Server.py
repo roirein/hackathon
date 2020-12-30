@@ -3,8 +3,6 @@ import time
 from threading import *
 import struct
 import colorama
-import scapy.all
-
 
 
 class Server:
@@ -15,15 +13,15 @@ class Server:
         self.score1 = 0
         self.score2 = 0
         self.group2 = {}
-        networks = gethostbyname_ex(gethostname())[2]
+        networks = gethostbyname_ex(gethostname())[2]#choose the network we will run on
         print("choose your network:")
         for i in range(len(networks)):
             print(i+1, networks[i])
         ip = ""
         while True:
             try:
-                n = input("enter the network number:")
-                ip = networks[int(n)-1]
+                network = input("enter the network number:")
+                ip = networks[int(network)-1]
                 break
             except:
                 continue
@@ -53,12 +51,13 @@ class Server:
                 continue
 
     def add_new_client(self, client, addr):
+        client.settimeout(10)
         name = client.recv(1024)
         name = name.decode(encoding='utf-8')
         self.clients.append([name, client, addr])
 
-    def communicate_with_client(self,client):
-        client.settimeout(10)
+    def communicate_with_client(self, client):
+        mutex = Lock()
         respond = f'{colorama.Fore.LIGHTMAGENTA_EX}Welcome to Keyboard Spamming Battle Royale.\n'
         respond += "Group 1:\n==\n"
         for i in self.group1:
@@ -72,12 +71,10 @@ class Server:
         except:
             print("connection lost")
             return
-        mutex = Lock()
         start = time.time()
         while time.time() < start + 10:
             try:
                 msg = client.recv(1024).decode(encoding='utf-8')
-                #client.send(str.encode('a'))
                 if msg is not None:
                     if client in self.group1:
                         mutex.acquire()
@@ -87,7 +84,7 @@ class Server:
                         mutex.acquire()
                         self.score2 += 1
                         mutex.release()
-            except Exception as e:
+            except:
                 print("connection lost")
                 return
 
@@ -98,7 +95,7 @@ class Server:
         tcp_socket.bind((self.my_ip, 12001))
         tcp_socket.listen(100)
         tcp_socket.settimeout(1)
-        while not flag:
+        while not flag: #run till ther are clients connected
             t1 = Timer(0.1, self.spread_the_message)
             t2 = Timer(0.1, self.accept_clients, args=(tcp_socket,))
             t1.start()
