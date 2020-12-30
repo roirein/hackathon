@@ -76,6 +76,7 @@ class Client:
         print(msg)
         #self.tcp_client_Socket.settimeout(0.001)
         t_end = time.time() + 10
+        time_out = 10
         while time.time() < t_end:
             if os.name == 'nt':
                 try:
@@ -86,9 +87,11 @@ class Client:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                if self.key_pressed():
-                    key = getch.getch()
-                    socket.send(str.encode(key))
+                rlist, wlist, xlist = select([sys.stdin],[],[],time_out)
+                if rlist:
+                    socket.send(str.encode(rlist))
+                else:
+                    pass
         try:
             msg = socket.recv(1024)
         except:
