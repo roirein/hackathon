@@ -1,11 +1,13 @@
 import select
 import time
 import os
+import threading
 from socket import *
 import struct
 #from msvcrt import getch
 #from msvcrt import kbhit
 import os
+import _thread
 
 # Windows
 if os.name == 'nt':
@@ -13,6 +15,7 @@ if os.name == 'nt':
 
 # Posix (Linux, OS X)
 else:
+    import fcntl
     import sys
     import select
     import tty
@@ -27,6 +30,7 @@ class Client:
         #self.udp_client_Socket = socket(AF_INET, SOCK_DGRAM)
         #self.tcp_client_Socket = socket(AF_INET, SOCK_STREAM)
         print("Client started, listening for offer requests...")
+        self.input = None
 
     def look_for_server(self):
         udp_socket = socket(AF_INET, SOCK_DGRAM)
@@ -78,11 +82,11 @@ class Client:
                     if msvcrt.kbhit():
                         key = msvcrt.getch()
                         socket.send(str.encode(key.decode(encoding='utf-8')))
-                except:
+                except Exception as e:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                if self.kbhit():
+                if self.key_pressed():
                     key = getch.getch()
                     socket.send(str.encode(key))
         try:
@@ -96,9 +100,26 @@ class Client:
         socket.close()
         print("Server disconnected, listening for offer requests...")
 
-    def kbhit(self):
-        dr, dw, de = select([sys.stdin], [], [], 0)
-        return dr != []
+    def key_pressed(self):
+        fd = sys.stdin.fileno()
+        oldterm = termios.tcgetattr(fd)
+        newattr = termios.tcgetattr(fd)
+        newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
+        termios.tcsetattr(fd, termios.TCSANOW, newattr)
+        oldflags = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, oldflags | os.O_NONBLOCK)
+        try:
+            while True:
+                try:
+                    c = sys.stdin.read(1)
+                    return True
+                except IOError:
+                    return False
+        finally:
+            termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
+            fcntl.fcntl(fd, fcntl.F_SETFL, oldflags)
+
+
 
 
 def run_client(client):
@@ -108,5 +129,5 @@ def run_client(client):
         client.communicate_with_server(s)
 
 
-c = Client("Santa Claus")
+c = Client("STUXNET")
 run_client(c)
