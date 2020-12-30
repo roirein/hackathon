@@ -91,9 +91,14 @@ class Client:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                p = threading.Thread(target=Client.send_message, args=(socket,))
-                p.start()
-                p.join(stop)
+                old_settings = termios.tcgetattr(sys.stdin)
+                try:
+                    tty.setcbreak(sys.stdin.fileno())
+                    if self.isData():
+                        c = sys.stdin.read(1)
+                        socket.send(str.encode(c))
+                finally:
+                    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
         try:
             msg = socket.recv(1024)
         except:
@@ -104,6 +109,9 @@ class Client:
         print(msg)
         socket.close()
         print("Server disconnected, listening for offer requests...")
+
+    def isData(self):
+        return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
 
     @staticmethod
     def send_message(socket):
