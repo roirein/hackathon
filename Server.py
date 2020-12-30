@@ -161,6 +161,7 @@ class Server:
 def run_server(server):
     while True:
         server.server_main_func()
+        time.sleep(1)
 
 
 server = Server()

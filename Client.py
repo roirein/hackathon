@@ -49,7 +49,7 @@ class Client:
                 data = struct.unpack("Ibh", data)
             except:
                 continue
-            print(f'{colorama.Fore.LIGHTYELLOW_EX}Received offer from " + adrr[0] + " ,attempting to connect...')
+            print(f'{colorama.Fore.LIGHTYELLOW_EX}Received offer from ' + f'{colorama.Fore.LIGHTYELLOW_EX}' + str(adrr[0]) + f'{colorama.Fore.LIGHTYELLOW_EX} ,attempting to connect...')
             if data[0] == magic_cookie:
                 msg = magic_cookie
             else:
@@ -131,6 +131,7 @@ def run_client(client):
         addr = client.look_for_server()
         s = client.connect_to_server(addr)
         client.communicate_with_server(s)
+        time.sleep(1)
 
 
 c = Client("STUXNET")
