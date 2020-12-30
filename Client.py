@@ -12,6 +12,7 @@ import _thread
 # Windows
 if os.name == 'nt':
     import msvcrt
+    import sys
 
 # Posix (Linux, OS X)
 else:
@@ -87,7 +88,7 @@ class Client:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                rlist, wlist, xlist = select([sys.stdin],[],[],time_out)
+                rlist, wlist, xlist = select.select([sys.stdin],[],[],time_out)
                 if rlist:
                     socket.send(str.encode(rlist))
                 else:
