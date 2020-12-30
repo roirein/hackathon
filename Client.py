@@ -14,9 +14,9 @@ if os.name == 'nt':
 # Posix (Linux, OS X)
 else:
     import sys
+    import select
+    import tty
     import termios
-    import atexit
-    from select import select
 
 
 class Client:
@@ -75,7 +75,22 @@ class Client:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                print("Jesus Christ enter the chat")
+                old_settings = termios.tcgetattr(sys.stdin)
+                try:
+                    tty.setcbreak(sys.stdin.fileno())
+
+                    i = 0
+                    while 1:
+                        print(i)
+                        i += 1
+
+                        if self.isData():
+                            c = sys.stdin.read(1)
+                            if c == '\x1b':  # x1b is ESC
+                                break
+
+                finally:
+                    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
         try:
             msg = socket.recv(1024)
         except:
@@ -86,6 +101,9 @@ class Client:
         print(msg)
         socket.close()
         print("Server disconnected, listening for offer requests...")
+
+    def isData(self):
+        return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
 
 
 def run_client(client):
