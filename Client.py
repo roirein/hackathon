@@ -22,14 +22,15 @@ class Client:
 
     def __init__(self, name):
         self.name = name
-        print("Client started, listening for offer requests...")
         colorama.init()
+        print(f'{colorama.Fore.GREEN}Client started, listening for offer requests...')
 
     def look_for_server(self):
+        magic_cookie = 4276993775
+        port = 13117
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-        udp_socket.bind(('', 13117))
-        magic_cookie = 4276993775
+        udp_socket.bind(('', port))
         msg = 0
         while msg != magic_cookie:
             data,adrr = udp_socket.recvfrom(1024)

@@ -3,7 +3,7 @@ import time
 from threading import *
 import struct
 import colorama
-
+import scapy.all
 
 class Server:
 
@@ -13,31 +13,21 @@ class Server:
         self.score1 = 0
         self.score2 = 0
         self.group2 = {}
-        networks = gethostbyname_ex(gethostname())[2]#choose the network we will run on
-        print("choose your network:")
-        for i in range(len(networks)):
-            print(i+1, networks[i])
-        ip = ""
-        while True:
-            try:
-                network = input("enter the network number:")
-                ip = networks[int(network)-1]
-                break
-            except:
-                continue
-        self.my_ip = ip
+        self.my_ip = scapy.all.get_if_addr(scapy.all.conf.iface)
         colorama.init()
-        print("Server started,listening on IP address " + self.my_ip)
+        print(f'{colorama.Fore.GREEN}Server started,listening on IP address ' + self.my_ip)
 
 
     def spread_the_message(self):
+        dest_port = 13117
+        source_port = 12000
         udp_socket = socket(AF_INET, SOCK_DGRAM)
-        udp_socket.bind((self.my_ip, 12000))
+        udp_socket.bind((self.my_ip, source_port))
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
         t_end = time.time() + 10
         message = struct.pack('Ibh', 0xfeedbeef, 0x2, 0x2ee1)
         while time.time() < t_end:
-            udp_socket.sendto(message, ("255.255.255.255", 13117))
+            udp_socket.sendto(message, ("255.255.255.255", dest_port))
             time.sleep(1)
         udp_socket.close()
 
@@ -69,7 +59,7 @@ class Server:
         try:
             client.send(str.encode(respond))
         except:
-            print("connection lost")
+            print(f'{colorama.Fore.GREEN}connection lost')
             return
         start = time.time()
         while time.time() < start + 10:
@@ -85,17 +75,18 @@ class Server:
                         self.score2 += 1
                         mutex.release()
             except:
-                print("connection lost")
+                print(f'{colorama.Fore.GREEN}connection lost')
                 return
 
     def server_main_func(self):
+        dest_port = 12001
         flag = False
         tcp_socket = socket(AF_INET, SOCK_STREAM)
         tcp_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        tcp_socket.bind((self.my_ip, 12001))
+        tcp_socket.bind((self.my_ip, dest_port))
         tcp_socket.listen(100)
         tcp_socket.settimeout(1)
-        while not flag: #run till ther are clients connected
+        while not flag:
             t1 = Timer(0.1, self.spread_the_message)
             t2 = Timer(0.1, self.accept_clients, args=(tcp_socket,))
             t1.start()
@@ -107,7 +98,7 @@ class Server:
                 tcp_socket.close()
                 tcp_socket = socket(AF_INET, SOCK_STREAM)
                 tcp_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-                tcp_socket.bind((self.my_ip, 12001))
+                tcp_socket.bind((self.my_ip, dest_port))
                 tcp_socket.listen(100)
                 tcp_socket.settimeout(1)
         for c in range(len(self.clients)):
@@ -142,7 +133,6 @@ class Server:
                 i[1].send(str.encode(message))
             except:
                 print("client is not available")
-        print(message)
         tcp_socket.close()
         print("Game over, sending out offer requests...")
         self.reset()
