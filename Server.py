@@ -21,12 +21,12 @@ class Server:
         while True:
             try:
                 n = input("enter the network number:")
-                ip = networks[int(n)-1]
+                ip = networks[n-1]
                 break
             except:
                 continue
         self.my_ip = ip
-        print(self.server_name +" entered the chat ,started,listening on IP address " + self.my_ip)
+        print("Server started,listening on IP address " + self.my_ip)
 
 
     def spread_the_message(self):
