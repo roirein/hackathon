@@ -28,7 +28,6 @@ class Server:
             except:
                 continue
         self.my_ip = ip
-        print(self.my_ip)
         colorama.init()
         print("Server started,listening on IP address " + self.my_ip)
 

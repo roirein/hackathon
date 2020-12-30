@@ -1,15 +1,9 @@
-import select
+
 import time
-import os
-import threading
 from socket import *
 import struct
 import colorama
-#from msvcrt import getch
-#from msvcrt import kbhit
 import os
-import scapy.all
-import multiprocessing
 
 # Windows
 if os.name == 'nt':
@@ -18,10 +12,8 @@ if os.name == 'nt':
 
 # Posix (Linux, OS X)
 else:
-    import fcntl
     import sys
     import select
-    from multiprocessing import process
     import tty
     import getch
     import termios
@@ -34,25 +26,12 @@ class Client:
         #self.udp_client_Socket = socket(AF_INET, SOCK_DGRAM)
         #self.tcp_client_Socket = socket(AF_INET, SOCK_STREAM)
         print("Client started, listening for offer requests...")
-        networks = gethostbyname_ex(gethostname())[2]
-        print("choose your network:")
-        for i in range(len(networks)):
-            print(i + 1, networks[i])
-        ip = ""
-        while True:
-            try:
-                n = input("enter the network number:")
-                ip = networks[int(n) - 1]
-                break
-            except:
-                continue
-        self.my_ip = ip
         colorama.init()
 
     def look_for_server(self):
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-        udp_socket.bind((self.my_ip, 13117))
+        udp_socket.c(('', 13117))
         magic_cookie = 4276993775
         msg = 0
         while msg != magic_cookie:
