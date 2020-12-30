@@ -90,6 +90,7 @@ class Client:
             else:
                 rlist, wlist, xlist = select.select([sys.stdin],[],[],time_out)
                 if rlist:
+                    print(str(rlist))
                     socket.send(str.encode(str(rlist)))
                 else:
                     pass
