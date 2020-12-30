@@ -31,7 +31,7 @@ class Client:
     def look_for_server(self):
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-        udp_socket.c(('', 13117))
+        udp_socket.bind(('', 13117))
         magic_cookie = 4276993775
         msg = 0
         while msg != magic_cookie:
