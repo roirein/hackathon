@@ -4,6 +4,7 @@ import os
 import threading
 from socket import *
 import struct
+import colorama
 #from msvcrt import getch
 #from msvcrt import kbhit
 import os
@@ -34,6 +35,7 @@ class Client:
         #self.tcp_client_Socket = socket(AF_INET, SOCK_STREAM)
         print("Client started, listening for offer requests...")
         self.input = None
+        colorama.init()
 
     def look_for_server(self):
         udp_socket = socket(AF_INET, SOCK_DGRAM)
@@ -47,11 +49,11 @@ class Client:
                 data = struct.unpack("Ibh", data)
             except:
                 continue
-            print("Received offer from " + adrr[0] + " ,attempting to connect...")
+            print(f'{colorama.Fore.LIGHTYELLOW_EX}Received offer from " + adrr[0] + " ,attempting to connect...')
             if data[0] == magic_cookie:
                 msg = magic_cookie
             else:
-                print("connection failed, trying again")
+                print(f'{colorama.Fore.RED}connection failed, trying again')
         udp_socket.close()
         return data[2], adrr[0]
 
@@ -63,13 +65,13 @@ class Client:
             tcp_Socket .send(str.encode(self.name + "\n"))
             return tcp_Socket
         except:
-            print("connection failed")
+            print(colorama.Fore.RED+"connection failed")
 
     def communicate_with_server(self, socket):
         try:
             msg = socket.recv(1024)
         except:
-            print("connection lost, listening for offer requests...")
+            print(colorama.Fore.RED+"connection lost, listening for offer requests...")
             try:
                 socket.close()
                 return
@@ -102,11 +104,11 @@ class Client:
         try:
             msg = socket.recv(1024)
         except:
-            print("connection lost, listening for offer requests...")
+            print(f'{colorama.Fore.RED}connection lost, listening for offer requests...')
             socket.close()
             return
         msg = msg.decode(encoding="utf-8")
-        print(msg)
+        print(f'{colorama.Fore.CYAN}' + msg)
         socket.close()
         print("Server disconnected, listening for offer requests...")
 

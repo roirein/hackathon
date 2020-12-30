@@ -2,7 +2,7 @@ from socket import *
 import time
 from threading import *
 import struct
-
+import colorama
 
 
 
@@ -15,7 +15,6 @@ class Server:
         self.score1 = 0
         self.score2 = 0
         self.group2 = {}
-        self.server_name = "Jesus Christ"
         networks = gethostbyname_ex(gethostname())[2]
         print("choose your network:")
         for i in range(len(networks)):
@@ -29,6 +28,7 @@ class Server:
             except:
                 continue
         self.my_ip = ip
+        colorama.init()
         print("Server started,listening on IP address " + self.my_ip)
 
 
@@ -59,14 +59,14 @@ class Server:
 
     def communicate_with_client(self,client):
         client.settimeout(10)
-        respond = "Welcome to Keyboard Spamming Battle Royale.\n"
+        respond = f'{colorama.Fore.LIGHTMAGENTA_EX}Welcome to Keyboard Spamming Battle Royale.\n'
         respond += "Group 1:\n==\n"
         for i in self.group1:
             respond += self.group1[i]
         respond += "Group 2:\n==\n"
         for i in self.group2:
             respond += self.group2[i]
-        respond += "\n Start pressing keys on your keyboard as fast as you can!!\n"
+        respond += "\nStart pressing keys on your keyboard as fast as you can!!\n"
         try:
             client.send(str.encode(respond))
         except:
