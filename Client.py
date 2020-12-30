@@ -82,8 +82,9 @@ class Client:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                key = getch.getch()
-                socket.send(str.encode(key))
+                if self.kbhit():
+                    key = getch.getch()
+                    socket.send(str.encode(key))
         try:
             msg = socket.recv(1024)
         except:
@@ -95,8 +96,9 @@ class Client:
         socket.close()
         print("Server disconnected, listening for offer requests...")
 
-    def isData(self):
-        return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
+    def kbhit(self):
+        dr, dw, de = select([sys.stdin], [], [], 0)
+        return dr != []
 
 
 def run_client(client):
