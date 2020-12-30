@@ -101,6 +101,7 @@ class Client:
         print("Server disconnected, listening for offer requests...")
 
     def key_pressed(self):
+        print("pressed")
         fd = sys.stdin.fileno()
         oldterm = termios.tcgetattr(fd)
         newattr = termios.tcgetattr(fd)
