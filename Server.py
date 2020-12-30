@@ -3,7 +3,7 @@ import time
 from threading import *
 import struct
 import colorama
-
+import scapy.all
 
 
 
@@ -44,6 +44,7 @@ class Server:
         udp_socket.close()
 
     def accept_clients(self, tcp_socket):
+        print(scapy.all.get_if_addr(scapy.all.conf.iface))
         t_end = time.time() + 10
         while time.time() < t_end:
             try:
