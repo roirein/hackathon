@@ -83,6 +83,7 @@ class Client:
                     return
             else:
                 key = getch.getch()
+                print(key)
                 socket.send(str.encode(key.decode(encoding='utf-8')))
         try:
             msg = socket.recv(1024)
