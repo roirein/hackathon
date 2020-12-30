@@ -107,9 +107,9 @@ class Client:
 
     @staticmethod
     def send_message(socket):
-        key = msvcrt.getch()
+        key = getch.getch()
         try:
-            socket.send(str.encode(key.decode(encoding='utf-8')))
+            socket.send(str.encode(key))
         except:
             pass
 
