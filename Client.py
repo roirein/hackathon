@@ -91,7 +91,7 @@ class Client:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                old_settings = termios.tcgetattr(sys.stdin)
+                #old_settings = termios.tcgetattr(sys.stdin)
                 try:
                     tty.setcbreak(sys.stdin.fileno())
                     if self.isData():
