@@ -16,6 +16,7 @@ else:
     import sys
     import select
     import tty
+    import getch
     import termios
 
 
@@ -35,7 +36,10 @@ class Client:
         msg = 0
         while msg != magic_cookie:
             data,adrr = udp_socket.recvfrom(1024)
-            data = struct.unpack("Ibh", data)
+            try:
+                data = struct.unpack("Ibh", data)
+            except:
+                continue
             print("Received offer from " + adrr[0] + " ,attempting to connect...")
             if data[0] == magic_cookie:
                 msg = magic_cookie
@@ -59,8 +63,11 @@ class Client:
             msg = socket.recv(1024)
         except:
             print("connection lost, listening for offer requests...")
-            socket.close()
-            return
+            try:
+                socket.close()
+                return
+            except:
+                return
         msg = msg.decode(encoding="utf-8")
         print(msg)
         #self.tcp_client_Socket.settimeout(0.001)
@@ -75,22 +82,8 @@ class Client:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                old_settings = termios.tcgetattr(sys.stdin)
-                try:
-                    tty.setcbreak(sys.stdin.fileno())
-
-                    i = 0
-                    while 1:
-                        print(i)
-                        i += 1
-
-                        if self.isData():
-                            c = sys.stdin.read(1)
-                            if c == '\x1b':  # x1b is ESC
-                                break
-
-                finally:
-                    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
+                key = getch.getch()
+                socket.send(str.encode(key.decode(encoding='utf-8')))
         try:
             msg = socket.recv(1024)
         except:
