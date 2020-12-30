@@ -47,7 +47,6 @@ class Client:
             except:
                 continue
         self.my_ip = ip
-        print(self.my_ip)
         colorama.init()
 
     def look_for_server(self):
