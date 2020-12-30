@@ -8,6 +8,7 @@ import struct
 #from msvcrt import kbhit
 import os
 import _thread
+import multiprocessing
 
 # Windows
 if os.name == 'nt':
@@ -19,6 +20,7 @@ else:
     import fcntl
     import sys
     import select
+    from multiprocessing import process
     import tty
     import getch
     import termios
@@ -77,23 +79,21 @@ class Client:
         print(msg)
         #self.tcp_client_Socket.settimeout(0.001)
         t_end = time.time() + 10
-        time_out = 10
+        stop = 0.5
         while time.time() < t_end:
             if os.name == 'nt':
                 try:
                     if msvcrt.kbhit():
                         key = msvcrt.getch()
                         socket.send(str.encode(key.decode(encoding='utf-8')))
+
                 except Exception as e:
                     print("connection lost, listening for offer requests...")
                     return
             else:
-                rlist, wlist, xlist = select.select([sys.stdin],[],[],time_out)
-                if rlist:
-                    print(str(rlist))
-                    socket.send(str.encode(str(rlist)))
-                else:
-                    pass
+                p = threading.Thread(target=Client.send_message, args=(socket,))
+                p.start()
+                p.join(stop)
         try:
             msg = socket.recv(1024)
         except:
@@ -105,25 +105,13 @@ class Client:
         socket.close()
         print("Server disconnected, listening for offer requests...")
 
-    def key_pressed(self):
-        print("pressed")
-        fd = sys.stdin.fileno()
-        oldterm = termios.tcgetattr(fd)
-        newattr = termios.tcgetattr(fd)
-        newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
-        termios.tcsetattr(fd, termios.TCSANOW, newattr)
-        oldflags = fcntl.fcntl(fd, fcntl.F_GETFL)
-        fcntl.fcntl(fd, fcntl.F_SETFL, oldflags | os.O_NONBLOCK)
+    @staticmethod
+    def send_message(socket):
+        key = msvcrt.getch()
         try:
-            while True:
-                try:
-                    c = sys.stdin.read(1)
-                    return True
-                except IOError:
-                    return False
-        finally:
-            termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
-            fcntl.fcntl(fd, fcntl.F_SETFL, oldflags)
+            socket.send(str.encode(key.decode(encoding='utf-8')))
+        except:
+            pass
 
 
 
