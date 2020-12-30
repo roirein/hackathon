@@ -44,7 +44,6 @@ class Server:
         udp_socket.close()
 
     def accept_clients(self, tcp_socket):
-        print(scapy.all.get_if_addr(scapy.all.conf.iface))
         t_end = time.time() + 10
         while time.time() < t_end:
             try:
@@ -96,7 +95,7 @@ class Server:
         flag = False
         tcp_socket = socket(AF_INET, SOCK_STREAM)
         tcp_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-        tcp_socket.bind(('', 12001))
+        tcp_socket.bind((self.my_ip, 12001))
         tcp_socket.listen(100)
         tcp_socket.settimeout(1)
         while not flag:
