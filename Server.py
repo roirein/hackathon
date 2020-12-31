@@ -15,7 +15,7 @@ class Server:
         self.score1 = 0
         self.score2 = 0
         self.group2 = {}
-        self.my_ip = scapy.all.get_if_addr(scapy.all.conf.iface)
+        self.my_ip = "172.1.0.33"
         colorama.init()
         print(f'{colorama.Fore.GREEN}Server started,listening on IP address ' + self.my_ip)
 
@@ -25,13 +25,17 @@ class Server:
         using udp packets'''
         dest_port = 13117
         source_port = 12000
+        cookie = 0xfeedbeef
+        offer = 0x2
+        port_hexa = 0x2ee1
+        broadcast_ip = "172.1.255.255"
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.bind((self.my_ip, source_port))
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
         t_end = time.time() + 10
-        message = struct.pack('Ibh', 0xfeedbeef, 0x2, 0x2ee1)
+        message = struct.pack('Ibh',cookie, offer, port_hexa)
         while time.time() < t_end:
-            udp_socket.sendto(message, ("255.255.255.255", dest_port))
+            udp_socket.sendto(message, (broadcast_ip, dest_port))
             time.sleep(1)
         udp_socket.close()
 
@@ -92,6 +96,7 @@ class Server:
         and arrange the game groups and starts the threads for wach client'''
         dest_port = 12001
         flag = False
+        clients = []
         tcp_socket = socket(AF_INET, SOCK_STREAM)
         tcp_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         tcp_socket.bind((self.my_ip, dest_port))
@@ -117,7 +122,6 @@ class Server:
                 self.group1[self.clients[c][1]] = self.clients[c][0]
             else:
                 self.group2[self.clients[c][1]] = self.clients[c][0]
-        clients = []
         for i in self.clients:
             clients.append(Timer(0.1, self.communicate_with_client, args=(i[1],)))
         for i in clients:

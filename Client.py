@@ -32,10 +32,10 @@ class Client:
         the client connects to the server'''
         magic_cookie = 4276993775
         port = 13117
+        msg = 0
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
         udp_socket.bind(('', port))
-        msg = 0
         while msg != magic_cookie:
             data,adrr = udp_socket.recvfrom(1024)
             try:
@@ -60,6 +60,7 @@ class Client:
             return tcp_Socket
         except:
             print(colorama.Fore.RED+"connection failed")
+            return
 
     def communicate_with_server(self, socket):
         '''method for the communication with the server during the game,
@@ -83,7 +84,6 @@ class Client:
                     if msvcrt.kbhit():
                         key = msvcrt.getch()
                         socket.send(str.encode(key.decode(encoding='utf-8')))
-
                 except:
                     print("connection lost, listening for offer requests...")
                     return
@@ -118,8 +118,10 @@ def run_client(client):
     '''driver code for the client'''
     while True:
         addr = client.look_for_server()
-        s = client.connect_to_server(addr)
-        client.communicate_with_server(s)
+        socket = client.connect_to_server(addr)
+        if socket is None:
+            continue
+        client.communicate_with_server(socket)
         time.sleep(0.1)
 
 
