@@ -27,6 +27,9 @@ class Client:
         print(f'{colorama.Fore.GREEN}Client started, listening for offer requests...')
 
     def look_for_server(self):
+        '''method for looking for a server, the client recives
+        udp packets and if the packets is offer from  a server
+        the client connects to the server'''
         magic_cookie = 4276993775
         port = 13117
         udp_socket = socket(AF_INET, SOCK_DGRAM)
@@ -48,6 +51,7 @@ class Client:
         return data[2], adrr[0]
 
     def connect_to_server(self, address):
+        "method for set up the connection with the server"
         try:
             tcp_Socket = socket(AF_INET, SOCK_STREAM)
             tcp_Socket .setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -58,6 +62,9 @@ class Client:
             print(colorama.Fore.RED+"connection failed")
 
     def communicate_with_server(self, socket):
+        '''method for the communication with the server during the game,
+        the client send the server the characters pressed from the key board
+        and recive messages during the game'''
         try:
             msg = socket.recv(1024)
         except:
@@ -108,11 +115,12 @@ class Client:
 
 
 def run_client(client):
+    '''driver code for the client'''
     while True:
         addr = client.look_for_server()
         s = client.connect_to_server(addr)
         client.communicate_with_server(s)
-        time.sleep(1)
+        time.sleep(0.1)
 
 
 c = Client("STUXNET")

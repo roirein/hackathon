@@ -8,6 +8,8 @@ import scapy.all
 class Server:
 
     def __init__(self):
+        '''constructor for the server that initalize the the
+        data structures for the game'''
         self.clients = []
         self.group1 = {}
         self.score1 = 0
@@ -19,6 +21,8 @@ class Server:
 
 
     def spread_the_message(self):
+        '''method for broadcasting offers to join the game
+        using udp packets'''
         dest_port = 13117
         source_port = 12000
         udp_socket = socket(AF_INET, SOCK_DGRAM)
@@ -32,6 +36,8 @@ class Server:
         udp_socket.close()
 
     def accept_clients(self, tcp_socket):
+        '''method for accepting clients that recived the
+        offer for join the game'''
         t_end = time.time() + 10
         while time.time() < t_end:
             try:
@@ -41,12 +47,16 @@ class Server:
                 continue
 
     def add_new_client(self, client, addr):
+        '''adding new client for the game'''
         client.settimeout(10)
         name = client.recv(1024)
         name = name.decode(encoding='utf-8')
         self.clients.append([name, client, addr])
 
     def communicate_with_client(self, client):
+        '''method for communicate with the clients during the game,
+        send messages to the client about the game and recives the pressed keys
+        from the clients and count them for their group during the game'''
         mutex = Lock()
         respond = f'{colorama.Fore.LIGHTMAGENTA_EX}Welcome to Keyboard Spamming Battle Royale.\n'
         respond += "Group 1:\n==\n"
@@ -78,6 +88,8 @@ class Server:
                 return
 
     def server_main_func(self):
+        '''method that manage the server, using all the functions above
+        and arrange the game groups and starts the threads for wach client'''
         dest_port = 12001
         flag = False
         tcp_socket = socket(AF_INET, SOCK_STREAM)
@@ -137,6 +149,7 @@ class Server:
         self.reset()
 
     def reset(self):
+        '''reset the class field after a game over'''
         self.clients.clear()
         self.group1.clear()
         self.group2.clear()
@@ -145,6 +158,7 @@ class Server:
 
 
 def run_server(server):
+    '''driver code for the server'''
     while True:
         server.server_main_func()
         time.sleep(1)
