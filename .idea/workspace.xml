@@ -4,7 +4,6 @@
     <list default="true" id="0ef62f5c-f70d-4b1a-989d-3407310fe210" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +74,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../SE/PartB/part2" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.Server">
+  <component name="RunManager" selected="Python.Client">
     <configuration name="Client" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hackathon" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,8 +171,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Client" />
         <item itemvalue="Python.Server" />
+        <item itemvalue="Python.Client" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.Server (1)" />
       </list>
@@ -194,7 +193,7 @@
       <workItem from="1609147661682" duration="40940000" />
       <workItem from="1609229510294" duration="22833000" />
       <workItem from="1609316104933" duration="40926000" />
-      <workItem from="1609409196773" duration="9306000" />
+      <workItem from="1609409196773" duration="10232000" />
     </task>
     <servers />
   </component>
@@ -229,8 +228,8 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/hackathon$Server__1_.coverage" NAME="Server (1) Coverage Results" MODIFIED="1609190836912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/AppData/Local/Temp/Temp1_Pink_Floyd_Project_-_ITAY_(2).zip/Pink Floyd Project" />
     <SUITE FILE_PATH="coverage/hackathon$test.coverage" NAME="test Coverage Results" MODIFIED="1609409671835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/hackathon$Client.coverage" NAME="Client Coverage Results" MODIFIED="1609426501197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/hackathon$Server.coverage" NAME="Server Coverage Results" MODIFIED="1609426491624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/hackathon$Client.coverage" NAME="Client Coverage Results" MODIFIED="1609428689938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/hackathon$Server.coverage" NAME="Server Coverage Results" MODIFIED="1609428703007" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../../../../SE/PartB/metrics.py">

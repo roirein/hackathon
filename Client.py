@@ -4,7 +4,6 @@ from socket import *
 import struct
 import colorama
 import os
-import scapy.all
 
 # Windows
 if os.name == 'nt':
@@ -24,13 +23,6 @@ class Client:
     def __init__(self, name):
         self.name = name
         colorama.init()
-        ips = ["172.1.0.33","172.99.0.33",scapy.all.get_if_addr(scapy.all.conf.iface)]
-        for i in range(len(ips)):
-            print(str(i+1) + " " + ips[i])
-        n = input("enter ip to listen: ")
-        while n != '1' and n != '2' and n != '3':
-            n = input("enter ip: ")
-        self.my_ip = ips[int(n) - 1]
         print(f'{colorama.Fore.GREEN}Client started, listening for offer requests...')
 
     def look_for_server(self):
@@ -42,7 +34,7 @@ class Client:
         msg = 0
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-        udp_socket.bind((self.my_ip, port))
+        udp_socket.bind(('', port))
         while msg != magic_cookie:
             data,adrr = udp_socket.recvfrom(1024)
             try:
