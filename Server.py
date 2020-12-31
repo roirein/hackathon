@@ -15,7 +15,13 @@ class Server:
         self.score1 = 0
         self.score2 = 0
         self.group2 = {}
-        self.my_ip = "172.1.0.33"
+        ips = ["172.1.0.33","172.99.0.33",scapy.all.get_if_addr(scapy.all.conf.iface)]
+        for i in range(len(ips)):
+            print(str(i+1) + " " + ips[i])
+        n = input("enter your ip: ")
+        while n != '1' and n != '2' and n != '3':
+            n = input("enter your ip: ")
+        self.my_ip = ips[int(n) - 1]
         colorama.init()
         print(f'{colorama.Fore.GREEN}Server started,listening on IP address ' + self.my_ip)
 
@@ -28,7 +34,13 @@ class Server:
         cookie = 0xfeedbeef
         offer = 0x2
         port_hexa = 0x2ee1
-        broadcast_ip = "172.1.255.255"
+        broadcast_ip = ""
+        if self.my_ip.startswith("172.1"):
+            broadcast_ip = "172.1.255.255"
+        elif self.my_ip.startswith("172.99"):
+            broadcast_ip = "172.99.255.255"
+        else:
+            broadcast_ip = "255.255.255.255"
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.bind((self.my_ip, source_port))
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
