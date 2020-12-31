@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +40,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+    <option name="x" value="-9" />
     <option name="width" value="2065" />
     <option name="height" value="1120" />
   </component>
@@ -50,7 +51,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -62,6 +62,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -75,7 +76,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../SE/PartB/part2" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.Client">
+  <component name="RunManager" selected="Python.Server">
     <configuration name="Client" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hackathon" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -193,7 +194,8 @@
       <workItem from="1609089332027" duration="3814000" />
       <workItem from="1609147661682" duration="40940000" />
       <workItem from="1609229510294" duration="22833000" />
-      <workItem from="1609316104933" duration="40822000" />
+      <workItem from="1609316104933" duration="40926000" />
+      <workItem from="1609409196773" duration="617000" />
     </task>
     <servers />
   </component>
@@ -227,18 +229,14 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/hackathon$Server__1_.coverage" NAME="Server (1) Coverage Results" MODIFIED="1609190836912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/AppData/Local/Temp/Temp1_Pink_Floyd_Project_-_ITAY_(2).zip/Pink Floyd Project" />
-    <SUITE FILE_PATH="coverage/hackathon$test.coverage" NAME="test Coverage Results" MODIFIED="1609346323791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/hackathon$Client.coverage" NAME="Client Coverage Results" MODIFIED="1609368996072" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/hackathon$test.coverage" NAME="test Coverage Results" MODIFIED="1609409671835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/hackathon$Client.coverage" NAME="Client Coverage Results" MODIFIED="1609409812295" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/hackathon$Server.coverage" NAME="Server Coverage Results" MODIFIED="1609368936046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../../../../SE/PartB/metrics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3420">
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-3420" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/tkinter/__init__.py">
@@ -266,12 +264,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <marker date="1609079490485" expanded="true" signature="93:95" ph="..." />
-            <marker date="1609079490485" expanded="true" signature="108:109" ph="..." />
-            <marker date="1609079490485" expanded="true" signature="108:114" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -279,11 +271,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
           <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <marker date="1609084806155" expanded="true" signature="122:127" ph="..." />
-            <marker date="1609084806155" expanded="true" signature="2198:2730" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>

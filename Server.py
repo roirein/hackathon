@@ -59,7 +59,7 @@ class Server:
         try:
             client.send(str.encode(respond))
         except:
-            print(f'{colorama.Fore.GREEN}connection lost')
+            print(f'{colorama.Fore.RED}connection lost')
             return
         start = time.time()
         while time.time() < start + 10:
@@ -75,7 +75,6 @@ class Server:
                         self.score2 += 1
                         mutex.release()
             except:
-                print(f'{colorama.Fore.GREEN}connection lost')
                 return
 
     def server_main_func(self):
