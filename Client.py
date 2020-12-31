@@ -31,7 +31,7 @@ class Client:
         port = 13117
         udp_socket = socket(AF_INET, SOCK_DGRAM)
         udp_socket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-        udp_socket.bind((scapy.all.get_if_addr(scapy.all.conf.iface), port))
+        udp_socket.bind(('', port))
         msg = 0
         while msg != magic_cookie:
             data,adrr = udp_socket.recvfrom(1024)
